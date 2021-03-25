@@ -1,2 +1,2 @@
 # Images-Gallery
-simplest PHP-script, which scans the folder, and then displays the list of images on the screen as an html-table.
+A simple PHP-script that scans a folder for images and creates a table with them (displays a list of images on the screen in the form of an html table).
