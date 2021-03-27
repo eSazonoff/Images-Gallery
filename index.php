@@ -1,5 +1,5 @@
 <style>
-     table{
+     table, td{
           margin: auto;
           border: 1px solid black;
      }
@@ -8,24 +8,19 @@
      }
 </style>
 <?php
+     $images_extensions = ['jpg', 'png', 'bmp']; //разрешенные расширения файлов
      $dir = 'img'; //имя папки, которая находится в том же каталоге, что и скрипт
-     $files = scandir($dir); //scandir получает имена файлов из папки; сортировка по умолчанию
-     $k = 0; //счетчик изображений
-     if (count($files) != 2) //подсчитываю dir сканирования. если он равен 2,значит, что в папке нет файлов, а если он больше или меньше 2, значит, что в папке есть файл
+     $files = array_slice(scandir($dir), 2); //scandir получает имена файлов из папки, array_slice удаляет 2 последних элемента, т.к. это каталоги
+     echo '<table><tr>';
+     $column = 0;
+     foreach($files as $filename) //цикл по массиву $files, переменная $filename = элемент
      { 
-          echo '<table><tr>';
-          for ($i = 0; $i < count($files); $i++) 
-          {
-               if ($k == 5) break; //ограничение кол-ва изображений, выход из цикла, если их больше 5
-               $rest = substr($files[$i], -1); //возвращение последнего символа
-               if($rest == "g" || $rest == "G"|| $rest == "p" || $rest == "P") //проверка последнего символа от png, jpg, bmp с учётом регистра
-               {
-                    echo '<td><img src="' . $dir . '/' . $files[$i] . '" alt="Изображение"></td>';
-                    ++$k;
-               } 
-          }
-          echo '</tr></table>';
-     } else { 
-          echo '<h1>В папке отсутсвуют изображения!</h1>' ;
+          if ($column > 0 && $column % 5 == 0) echo '</tr><tr>'; //если остаток от деления равен 0, переходим на новую строку
+          $column++; //увеличиваем счетчик столбцов
+          $file_extension = strtolower(substr($filename, strrpos($filename, '.') + 1)); // вырезаем расширение файла (после точки)
+          if (!in_array($file_extension, $images_extensions)) continue; //если расширение не входит в список разрешенных пропускаем
+          echo '<td>' . $filename . '<br><img src="' . $dir . '/' . $filename . '"></td>';
      }
+
+     echo '</tr></table>';
 ?>
