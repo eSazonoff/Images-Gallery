@@ -5,6 +5,10 @@
      
      for ($i = 0; $i < count($files); $i++) 
      {
+          $rest = substr($files[$i], -1); //возвращение последнего символа в rest
+          if($rest == "g" || $rest == "G"|| $rest == "p" || $rest == "P") //проверка последнего символа от png, jpg, bmp с учётом регистра
+          {
                echo '<img src="' . $dir . '/' . $files[$i] . '" alt="Изображение">';
+          } 
      }
 ?>
