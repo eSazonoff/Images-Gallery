@@ -1,25 +1,23 @@
 <style>
-     *{
-          text-align: center; /* Для центрирования инлайновых элементов, к которым относиться <img>*/
-     }
+        table {
+            border: 1px solid black;
+            margin: 50px auto;
+        }
+
+        img {
+            width: 300px;
+            height: 250px;
+        }
 </style>
-<?php
-     $dir = 'img'; //имя папки, которая находится в том же каталоге, что и скрипт
-     $files = scandir($dir); //scandir получает имена файлов из папки; сортировка по умолчанию
-     $k = 0; //счетчик изображений
-     if (count($files) != 2) //подсчитываю dir сканирования. если он равен 2,значит, что в папке нет файлов, а если он больше или меньше 2, значит, что в папке есть файл
-     { 
-          for ($i = 0; $i < count($files); $i++) 
-          {
-               if ($k == 5) break; //ограничение кол-ва изображений, выход из цикла, если их больше 5
-               $rest = substr($files[$i], -1); //возвращение последнего символа
-               if($rest == "g" || $rest == "G"|| $rest == "p" || $rest == "P") //проверка последнего символа от png, jpg, bmp с учётом регистра
-               {
-                    echo '<img src="' . $dir . '/' . $files[$i] . '" alt="Изображение">';
-                    ++$k;
-               } 
-          }
-     } else { 
-          echo '<h1>В папке отсутсвуют изображения!</h1>' ;
-     }
-?>
+<table>
+        <tr>
+            <?php
+                $getImages = scandir("img");
+                unset($getImages[0], $getImages[1]);
+                foreach ($getImages as $img) {?>
+                    <td>
+                        <img src=<?="img/".$img?> alt="photo">
+                    </td>
+            <?php }?>
+        </tr>
+</table>
